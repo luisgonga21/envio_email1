@@ -3,7 +3,7 @@ import { forgotPassword, saveUser, sessao } from "./controllers/UserController"
 
 const routes = Router();
 
-routes.post("/", (request: Request, response: Response) =>{
+routes.get("/", (request: Request, response: Response) =>{
       return response.json({ message: "Hello Code83"})
 });
 

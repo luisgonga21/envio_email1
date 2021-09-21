@@ -1,4 +1,3 @@
-import * as Yup from 'yup'
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import  User from "../entity/User";
@@ -6,17 +5,21 @@ import bcrypt from "bcrypt";
 import * as nodemailer from "nodemailer"
 import * as crypto from "crypto"
 
+
+
+
 export const saveUser = async (request: Request, response: Response) => {
 
     const { name, email, password, } = request.body;
+    
     try {
         const passwordHash = await bcrypt.hash(password, 8)
-        const user =  getRepository(User).create({
+        const user = await  getRepository(User).save({
             name,
             email,
             password: passwordHash,
         }) 
-        await getRepository(User).save(user)
+        //await getRepository(User).save(user)
         return response.status(201).json(user);
     } catch (error) {
         return response.status(422).json({message: "error in entities!"+error})
@@ -27,8 +30,8 @@ export const saveUser = async (request: Request, response: Response) => {
 
 
 export const sessao = async (request: Request, response: Response) => {
+    const { email, password, } = request.body;
     try{
-        const { email, password, } = request.body;
         console.log(password, "body")
         const user =  getRepository(User).find({
             where: {

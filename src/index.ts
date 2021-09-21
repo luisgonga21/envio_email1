@@ -11,7 +11,9 @@ app.use(express.json());
 app.use(cors())
 app.use(Routes);
 
-app.listen(4445, () => {
-    console.log("rodou!!")
+app.listen(process.env.PORT, () => {
+    console.log(`running on port ${process.env.PORT}!!`)
 })
+
+
 
